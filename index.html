@@ -13,7 +13,8 @@
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
-            --secondary: #0f172a;       /* Deep Dark Background */
+            --secondary: #0f172a;       /* Theme Dark BG */
+            --header-bg: rgba(15, 23, 42, 0.75); /* Adjusted Glassy Header */
             --accent: #d8b4fe;
             --accent-bright: #a855f7;
             --text-dark: #1e293b;
@@ -45,7 +46,10 @@
 
         /* --- Buttons --- */
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             padding: 12px 30px;
             border-radius: 50px;
             font-weight: 600;
@@ -53,7 +57,6 @@
             font-size: 16px;
             transition: all 0.3s ease;
             border: none;
-            text-align: center;
         }
         .btn-primary {
             background: var(--gradient);
@@ -71,6 +74,12 @@
             backdrop-filter: blur(5px);
         }
         .btn-light:hover { background: var(--white); color: var(--primary); }
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+        .btn-whatsapp:hover { background: #20bd5a; transform: translateY(-3px); }
 
         .section-padding { padding: 90px 0; }
         .section-header { text-align: center; margin-bottom: 50px; }
@@ -79,15 +88,13 @@
 
         /* --- 2. HEADER (Sticky & Glass) --- */
         header {
-            position: fixed; /* Sticky Header */
-            top: 0;
-            left: 0;
-            width: 100%;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
             z-index: 1000;
-            background: rgba(15, 23, 42, 0.85); /* Dark Glass Effect like V1 */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--header-bg); /* Lighter transparency */
+            backdrop-filter: blur(15px); /* Stronger blur */
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             transition: 0.3s;
         }
         
@@ -98,12 +105,13 @@
             height: 80px;
         }
 
-        /* Header Logo (Text Based - As requested) */
+        /* Logo Styling */
         .logo {
             font-size: 28px;
             font-weight: 800;
             color: var(--white);
             letter-spacing: -0.5px;
+            display: inline-block;
         }
         .logo span { 
             background: var(--gradient);
@@ -113,27 +121,31 @@
 
         /* Desktop Menu */
         .nav-menu { display: flex; gap: 25px; align-items: center; }
-        .nav-menu a { 
-            color: rgba(255, 255, 255, 0.85); 
+        .nav-menu a.nav-link { 
+            color: rgba(255, 255, 255, 0.9); 
             font-weight: 500; 
             font-size: 16px; 
             position: relative;
         }
-        .nav-menu a:hover { color: var(--white); }
-        .nav-menu a::after {
+        .nav-menu a.nav-link:hover { color: var(--white); }
+        .nav-menu a.nav-link::after {
             content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
             background: var(--accent-bright); transition: 0.3s;
         }
-        .nav-menu a:hover::after { width: 100%; }
+        .nav-menu a.nav-link:hover::after { width: 100%; }
 
-        .header-contact-btn { display: block; }
-        .mobile-toggle { display: none; color: white; font-size: 24px; cursor: pointer; }
+        /* Header Buttons Group */
+        .header-actions { display: flex; gap: 10px; align-items: center; }
+        .mobile-toggle { display: none; color: white; font-size: 24px; cursor: pointer; padding: 5px; }
+        
+        /* Mobile Menu Footer (Hidden on Desktop) */
+        .mobile-menu-footer { display: none; }
 
         /* --- 3. HERO SECTION --- */
         .hero {
             background: var(--secondary);
             color: var(--white);
-            padding: 160px 0 100px; /* Padding top adjusted for fixed header */
+            padding: 180px 0 100px;
             position: relative;
             overflow: hidden;
             min-height: 100vh;
@@ -163,7 +175,6 @@
             z-index: 1;
         }
 
-        /* Hero Left Text */
         .hero-text h4 {
             color: var(--accent);
             font-weight: 600;
@@ -172,14 +183,23 @@
             text-transform: uppercase;
             font-size: 14px;
         }
+        
+        /* Dual Color Title */
         .hero-text h1 { 
-            font-size: 46px; 
+            font-size: 48px; 
             line-height: 1.2; 
             font-weight: 700; 
             margin-bottom: 25px; 
+            color: var(--white);
         }
+        .text-gradient {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .hero-text p { 
-            font-size: 17px; 
+            font-size: 18px; 
             color: #cbd5e1; 
             margin-bottom: 35px; 
             line-height: 1.7;
@@ -194,23 +214,21 @@
             margin-bottom: 40px;
         }
 
-        /* Hero Stats Grid (Updated Layout) */
+        /* Stats Grid */
         .hero-stats-wrapper {
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 30px;
         }
         .hero-badges { 
             display: grid; 
-            grid-template-columns: repeat(4, 1fr); /* 4 Columns Desktop */
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px; 
         }
-        .hero-badge {
-            text-align: left;
-        }
-        .hero-badge div { font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+        .hero-badge { text-align: left; }
+        .hero-badge div { font-size: 32px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 5px; }
         .hero-badge span { font-size: 14px; color: #94a3b8; font-weight: 400; }
 
-        /* Hero Form (Right Side) */
+        /* Hero Form */
         .hero-form-container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
@@ -220,46 +238,27 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         .hero-form-container h3 {
-            color: var(--white);
-            margin-bottom: 5px;
-            font-size: 22px;
-            text-align: center;
+            color: var(--white); margin-bottom: 5px; font-size: 22px; text-align: center;
         }
         .hero-form-container p {
-            color: #94a3b8;
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 20px;
+            color: #94a3b8; font-size: 14px; text-align: center; margin-bottom: 20px;
         }
         .hero-form .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;
         }
         .hero-form input, .hero-form select, .hero-form textarea {
-            width: 100%;
-            padding: 12px;
+            width: 100%; padding: 12px;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            color: var(--white);
-            font-size: 14px;
-            transition: 0.3s;
+            color: var(--white); font-size: 14px; transition: 0.3s;
         }
         .hero-form input:focus, .hero-form select:focus, .hero-form textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(0, 0, 0, 0.5);
+            outline: none; border-color: var(--primary); background: rgba(0, 0, 0, 0.5);
         }
         .hero-form textarea { resize: none; height: 80px; margin-bottom: 15px; }
         .hero-form option { background: var(--secondary); color: white; }
-        
-        .hero-form button {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-        }
+        .hero-form button { width: 100%; padding: 14px; font-size: 16px; }
 
 
         /* --- 4. SERVICES --- */
@@ -309,7 +308,6 @@
             transition: 0.3s;
         }
         .ind-item h4 { font-size: 16px; font-weight: 600; color: var(--text-dark); }
-        
         .ind-item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: var(--primary); }
         .ind-item:hover i { transform: scale(1.1); }
 
@@ -364,14 +362,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
-        /* Footer Logo Sizing Update */
-        .footer-logo img { 
-            height: 70px; /* Bigger size as requested */
-            width: auto;
-            margin-bottom: 15px; 
-            filter: brightness(0) invert(1); /* Ensure white logo on dark bg */
-        } 
-        
         .footer-title { color: var(--white); font-weight: 700; margin-bottom: 20px; font-size: 18px; }
         .contact-info li { margin-bottom: 15px; display: flex; gap: 15px; }
         .contact-info i { color: var(--primary); margin-top: 5px; }
@@ -389,21 +379,44 @@
         /* --- Responsive Design --- */
         @media (max-width: 991px) {
             .mobile-toggle { display: block; }
-            .header-contact-btn { display: none; }
+            .header-actions { display: none; } /* Hide desktop buttons */
             
-            /* Mobile Menu Styling */
+            /* Standardized Mobile Menu */
             .nav-menu {
-                position: absolute;
-                top: 80px; left: 0; width: 100%;
-                background: var(--secondary);
+                position: fixed;
+                top: 80px; left: 0; width: 100%; height: auto;
+                background: var(--secondary); /* Solid background for legibility */
                 flex-direction: column;
-                padding: 30px;
-                gap: 20px;
+                align-items: flex-start;
+                padding: 20px 30px;
+                gap: 0;
                 display: none; /* Hidden by default */
                 border-top: 1px solid rgba(255,255,255,0.1);
                 box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                max-height: 85vh;
+                overflow-y: auto;
             }
-            .nav-menu.active { display: flex; } /* Show when active */
+            .nav-menu.active { display: flex; }
+            
+            .nav-menu a.nav-link {
+                width: 100%;
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                font-size: 16px;
+                color: #e2e8f0;
+            }
+            .nav-menu a.nav-link:last-child { border-bottom: none; }
+
+            /* Mobile Menu Buttons */
+            .mobile-menu-footer {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+                margin-top: 25px;
+                padding-bottom: 20px;
+            }
+            .mobile-menu-footer .btn { width: 100%; justify-content: center; }
 
             .hero-content { grid-template-columns: 1fr; gap: 40px; padding-top: 0; }
             .hero { padding-top: 130px; align-items: flex-start; height: auto; }
@@ -411,22 +424,36 @@
             .hero-btns { justify-content: center; }
             .hero-form-container { max-width: 600px; margin: 0 auto; }
             
-            .ind-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr; gap: 30px; }
         }
 
         @media (max-width: 600px) {
             .hero-text h1 { font-size: 34px; }
-            .ind-grid { grid-template-columns: 1fr; }
             .hero-form .form-row { grid-template-columns: 1fr; }
             
-            /* Stats Grid: 2 Columns on Mobile */
+            /* Mobile Stats Alignment Center */
             .hero-badges { 
                 grid-template-columns: repeat(2, 1fr); 
-                gap: 30px 15px; /* Vertical gap bigger */
+                gap: 25px 15px;
+                text-align: center;
             }
-            .hero-badge div { font-size: 24px; }
-            .hero-badge span { font-size: 13px; }
+            .hero-badge {
+                display: flex; flex-direction: column; align-items: center;
+            }
+            
+            /* Industries: 2 Columns on Mobile */
+            .ind-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .ind-item { padding: 20px 10px; }
+            .ind-item i { font-size: 26px; margin-bottom: 10px; }
+            .ind-item h4 { font-size: 14px; }
+
+            /* Footer CTA Mobile Fix */
+            .contact-cta {
+                padding: 30px 20px;
+                width: 95%;
+            }
+            .contact-cta h2 { font-size: 22px; line-height: 1.4; }
+            .contact-cta .btn { width: 100%; margin-top: 10px; }
         }
     </style>
 </head>
@@ -438,16 +465,26 @@
                 <a href="#" class="logo">Clixor<span>BD</span></a>
                 
                 <div class="nav-menu" id="navMenu">
-                    <a href="#home">হোম</a>
-                    <a href="#services">সার্ভিস</a>
-                    <a href="#products">প্রোডাক্ট</a>
-                    <a href="#portfolio">পোর্টফোলিও</a>
-                    <a href="#blog">ব্লগ</a>
-                    <a href="#client-portal">ক্লাইন্ট পোর্টাল</a>
-                    <a href="#contact">যোগাযোগ</a>
+                    <a href="#home" class="nav-link">হোম</a>
+                    <a href="#services" class="nav-link">সার্ভিস</a>
+                    <a href="#industries" class="nav-link">ইন্ডাস্ট্রি</a>
+                    <a href="#portfolio" class="nav-link">পোর্টফোলিও</a>
+                    <a href="#contact" class="nav-link">যোগাযোগ</a>
+                    
+                    <div class="mobile-menu-footer">
+                        <a href="tel:01943181939" class="btn btn-primary">
+                            <i class="fas fa-phone-alt"></i> কল করুন: 01943181939
+                        </a>
+                        <a href="https://wa.me/8801943181939" target="_blank" class="btn btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> হোয়াটসঅ্যাপ করুন
+                        </a>
+                    </div>
                 </div>
 
-                <div class="header-contact-btn">
+                <div class="header-actions">
+                    <a href="https://wa.me/8801943181939" target="_blank" class="btn btn-whatsapp" style="padding: 8px 15px; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fab fa-whatsapp" style="font-size: 20px; margin:0;"></i>
+                    </a>
                     <a href="tel:01943181939" class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;">
                         <i class="fas fa-phone-alt"></i> 01943181939
                     </a>
@@ -467,11 +504,11 @@
                     <h4>Build Smarter. Scale Faster. Grow Bigger.</h4>
                     
                     <h1>আপনার আইডিয়া। <br>
-                        আমাদের এক্সিকিউশন
+                        <span class="text-gradient">আমাদের এক্সিকিউশন</span>
                     </h1>
                     
                     <p>
-                        Business, Healthcare, Law & Legal, E‑commerce ইন্ডাস্ট্রির জন্য high‑performance website, scalable web application এবং custom SaaS platform তৈরীতে আপনার ডিজিটাল পার্টনার।
+                        high‑performance website, scalable web application এবং custom SaaS platform তৈরীতে আপনার ডিজিটাল পার্টনার।
                     </p>
                     
                     <div class="hero-btns">
@@ -519,7 +556,6 @@
                                 <option>সফটওয়্যার ডেভেলপমেন্ট</option>
                                 <option>ই-কমার্স সলিউশন</option>
                                 <option>SaaS অ্যাপ্লিকেশন</option>
-                                <option>পরামর্শ (Consultation)</option>
                                 <option>অন্যান্য</option>
                             </select>
                         </div>
@@ -654,7 +690,7 @@
     <div class="footer-wrapper" id="contact-footer">
         <div class="container">
             <div class="contact-cta">
-                <h2 style="margin-bottom: 10px; font-size: 32px;">আপনার প্রজেক্ট নিয়ে কথা বলতে চান?</h2>
+                <h2>আপনার প্রজেক্ট নিয়ে কথা বলতে চান?</h2>
                 <p style="margin-bottom: 30px; opacity: 0.9;">আমাদের টিম রেডি আছে আপনাকে সাহায্য করার জন্য।</p>
                 <a href="tel:01943181939" class="btn btn-light" style="color: var(--primary); background: white; border: none; font-weight: 700;">
                     <i class="fas fa-phone"></i> কল করুন: 01943181939
@@ -666,15 +702,14 @@
             <div class="container">
                 <div class="footer-grid">
                     <div>
-                        <a href="#" class="footer-logo">
-                            <img src="clixorbdlogotransparent.png" alt="ClixorBD">
-                        </a>
+                        <a href="#" class="logo" style="margin-bottom: 20px; display:block;">Clixor<span>BD</span></a>
+                        
                         <p>ClixorBD বাংলাদেশে নির্ভরযোগ্য ওয়েব ও সফটওয়্যার ডেভেলপমেন্ট এজেন্সি। আমরা প্রযুক্তির মাধ্যমে আপনার ব্যবসাকে এগিয়ে নিয়ে যাই।</p>
                         <div class="social-links">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
-                            <a href="https://wa.me/8801943181939"><i class="fab fa-whatsapp"></i></a>
+                            <a href="https://www.facebook.com/clixorbd" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.linkedin.com/in/aziz102/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="https://wa.me/8801943181939" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
 
@@ -729,6 +764,13 @@
             var menu = document.getElementById("navMenu");
             menu.classList.toggle("active");
         }
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById("navMenu").classList.remove("active");
+            })
+        });
     </script>
 
 </body>
